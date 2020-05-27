@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/common/jquery.treeview.css')}}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/common/jquery-3.3.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/common/jquery.treeview.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/common/index.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/monitoring_data.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/build_container.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/node_modules/ice/lib/Ice.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/Printer.js')}}"></script>
+</head>
+<body>
+<div id="header">
+    <span class="span0">部 署 工 具</span>
+    <span class="span4" id="node_ip"></span>
+    <span class="span1" id="time"><span></span>年<span></span>月<span></span>日<span></span>时<span></span>分<span></span>秒</span>
+    <span class="span3"><a id="refresh" href="#" onClick="window.location.reload()">刷新</a></span>
+</div>
+
+<div id="nav">
+   <ul id="browser" class="filetree treeview-famfamfam">
+   <ul>
+		<li id="cluster" class="closed">
+            <span class="folder">集群列表</span>
+                <ul>
+                {% for i in range(nodeLen) %}
+                    <li class="closed">
+                        <span class="folder" name="ip">{{ nodes[i] }}</span>
+                    </li>
+                {% endfor %}
+                </ul>
+		</li>
+   </ul>
+   </ul>
+</div>
+
+<div id="section">
+    <div class="row" id="build_container">
+        <fieldset>
+            <legend class="legend">构建容器</legend>
+            <input id="image_name" value="请输入要拉取的镜像名称">
+            <input type="button" onclick="pull_image()" value="下载镜像"><br />
+            <textarea id="image_pull_info"></textarea>
+            <input type="button" onclick="remove_image()" value="移除" title="移除镜像前，请确保未被任何容器使用！"/>
+            <p></p>
+            <table id="table_image" bordercolor="#aaaaaa" border="1" cellpadding="0" cellpadding="2" width="100%">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" class="i-checks" id="selectAllImg"/></th>
+                    <th>IMAGE ID</th>
+                    <th>RepoTags</th>
+                </tr>
+                </thead>
+                <tbody id="iBody">
+                </tbody>
+            </table>
+            image name：<input id="iname"/>
+            container name：<input id="cname"/>  <input type="button" onclick="create_container()" value="创建容器">
+            <input type="button" onclick="show_container_table()" value="查看容器列表">
+            <input type="button" onclick="build_cluster()" value="构建集群">
+            <textarea id="create_container_info"></textarea><br>
+            <textarea id="sh"></textarea>
+            <section role="main" id="body">
+                    <div class="row">
+                        <div class="large-12 medium-12 columns">
+                            <form>
+                                <div class="row">
+                                    <div class="small-12 columns">
+                                        <input type="button" id="exec" value="保存">
+                                        <input type="button" id="print" value="执行">
+                                        <div id="output"></div>
+                                    </div>
+                                </div>
+                                <div id="progress" class="row hide">
+                                    <div class="small-12 columns left">
+                                        <div class="inline left icon"></div>
+                                        <div class="text">Sending Request...</div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+    </fieldset>
+    </div>
+    <div class="row" id="container_table">
+    <fieldset>
+        <legend class="legend">容器列表</legend>
+        <input type="button" onclick="add_container()" value="添加"/>
+        <input type="button" onclick="remove_container()" value="移除" title="移除容器前，请先停止该容器！"/>
+        <input type="button" onclick="stop_container()" value="停止"/>
+        <input type="button" onclick="start_container()" value="启动"/>
+        <p></p>
+        <div contenteditable>
+            <table id="table_info" bordercolor="#aaaaaa" border="1" cellpadding="0" cellpadding="2" width="100%">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" class="i-checks" id="selectAllCon"/></th>
+                    <th>CONTAINER ID</th>
+                    <th>IMAGE</th>
+                    <th>CONTAINER NAME</th>
+                    <th>STATUS</th>
+                </tr>
+                </thead>
+                <tbody id="cBody">
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+    </div>
+</div>
+
+<div id="footer">
+    @2020  西安端怡科技有限公司
+    <span id="about">关于产品</span>
+    <span id="contect">联系我们</span>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='js/Client.js')}}"></script>
+</body>
+</html>
