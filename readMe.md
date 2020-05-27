@@ -19,7 +19,7 @@ cd /usr/dynas/deploy-deployTool/scripts
 cd /usr/dynas/deploy-deployTool
 make
 ```
-稍等片刻，看到程序成功启动，Ctrl+c关闭即可。
+稍等片刻，看到程序启动成功，Ctrl+c关闭即可。
 
 5.验证
 ``` bash
