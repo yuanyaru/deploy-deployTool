@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-# author: yyr
+# author： yyr
 
 # 安装docker
 yum update -y
