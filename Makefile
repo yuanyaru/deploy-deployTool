@@ -2,6 +2,9 @@ include Makefile.inc
 
 all:clean build run
 
+pip:
+	@${py}/get-pip.py
+
 build:
 	@${SCRIPTS}/build-tool.sh
 
